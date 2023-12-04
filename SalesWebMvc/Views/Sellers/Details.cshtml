@@ -1,0 +1,48 @@
+﻿@model SalesWebMvc.Models.Seller
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="card border-dark mb-3" style="max-width: 40rem;">
+    <dl class="card-body">
+        <dt class="card-title">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="card-text">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="card-title">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="card-text">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="card-title">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class="card-text">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt class="card-title">
+            @Html.DisplayNameFor(model => model.BaseSalary)
+        </dt>
+        <dd class="card-text">
+            @Html.DisplayFor(model => model.BaseSalary)
+        </dd>   
+        <dt class="card-title">
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd class="card-text">
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd> 
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
+    <a asp-action="Index">Back to list</a>
+</div>
