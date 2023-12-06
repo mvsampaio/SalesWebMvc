@@ -13,7 +13,7 @@ namespace SalesWebMvc.Data
             _context = context;
         }
 
-        public void Seed()
+        public async Task Seed()
         {            
             if (_context.Department.Any() || _context.Seller.Any() || _context.SalesRecord.Any())
             {
@@ -69,13 +69,13 @@ namespace SalesWebMvc.Data
                 new SalesRecord { Date = new DateTime(2018, 10, 12), Amount = 5000.0,  Status = SaleStatus.Billed,   Seller = sellers[1] }
             };
 
-            _context.Department.AddRange(departments);
-            _context.Seller.AddRange(sellers);
-            _context.SalesRecord.AddRange(sales);
+            await _context.Department.AddRangeAsync(departments);
+            await _context.Seller.AddRangeAsync(sellers);
+            await _context.SalesRecord.AddRangeAsync(sales);
 
             try
-            {
-                _context.SaveChanges();                
+            {                
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
