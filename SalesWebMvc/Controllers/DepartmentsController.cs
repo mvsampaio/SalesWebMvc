@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using SalesWebMvc.Services.Exceptions;
+using SalesWebMvc.Models.ViewModels;
+using System.Diagnostics;
 
 namespace SalesWebMvc.Controllers
 {
@@ -141,19 +144,35 @@ namespace SalesWebMvc.Controllers
                 return Problem("Entity set 'SalesWebMvcContext.Department'  is null.");
             }
 
-            var department = await _context.Department.FindAsync(id);
-            if (department != null)
+            try
             {
-                _context.Department.Remove(department);
-            }
+                var department = await _context.Department.FindAsync(id);
+                if (department != null)
+                {
+                    _context.Department.Remove(department);
+                }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Can't delete department because has linked seller" });
+            }            
         }
 
         private bool DepartmentExists(int id)
         {
             return (_context.Department?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

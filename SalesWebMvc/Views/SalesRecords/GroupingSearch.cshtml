@@ -8,20 +8,25 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse bg-primary">
     <div class="container-fluid">
         <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <div class="form-group">
+            <div class="form-group d-flex flex-row mb-3 align-items-end">
+                <div class="form-group p-2">
                     <label for="minDate">Min Date</label>
-                    <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"]>
+                    <input type="date" class="form-control" name="minDate" id="minDate" value=@ViewData["minDate"]>
                 </div>
-                <div class="form-group">
+                <div class="form-group p-2">
                     <label for="maxDate">Max Date</label>
-                    <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"]>
+                    <input type="date" class="form-control" name="maxDate" id="maxDate" value=@ViewData["maxDate"]>
+                </div>
+                <div class="form-group p-2">
+                    <button type="submit" class="btn btn-primary" id="filter-button">Filter</button>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <div class="alert alert-dismissible alert-danger visually-hidden" id="alert-data-filter">              
+                <strong>Invalid date!</strong> Modify values before filtering.
+            </div>
         </form>
     </div>
 </nav>
@@ -30,7 +35,8 @@
 {
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Department @departmentGroup.Key.Name, Total sales = @departmentGroup.Key.TotalSales(minDate, maxDate).ToString("F2")</h3>
+            <hr />
+            <h3 class="panel-title">Department <span class="text-info">@departmentGroup.Key.Name</span>, Total sales = <span class="text-success">@departmentGroup.Key.TotalSales(minDate, maxDate).ToString("F2")</span></h3>
         </div>
         <div class="panel-body">
             <table class="table table-striped table-hover">

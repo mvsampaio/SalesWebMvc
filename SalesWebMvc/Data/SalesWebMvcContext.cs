@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Humanizer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SalesWebMvc.Models;
 using System.Reflection.Metadata;
 
@@ -10,7 +12,6 @@ namespace SalesWebMvc.Data
             : base(options)
         {
         }
-
         public DbSet<Department> Department { get; set; } = default!;
         public DbSet<Seller> Seller { get; set; } = default!;
         public DbSet<SalesRecord> SalesRecord { get; set; } = default!;
@@ -22,7 +23,7 @@ namespace SalesWebMvc.Data
                 .Entity<SalesRecord>()
                 .HasOne(e => e.Seller)
                 .WithMany(e => e.Sales)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);                           
         }       
     }
 }
